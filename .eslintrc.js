@@ -11,7 +11,9 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'jest'],
   rules: {
+    camelcase: 'off',
     'import/extensions': ['error', 'never'],
+    'no-restricted-syntax': 'off',
   },
   settings: {
     'import/resolver': {

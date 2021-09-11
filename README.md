@@ -1,3 +1,7 @@
+<p align="center">
+	<img src="https://raw.githubusercontent.com/joaocarmo/pr-labeler/master/assets/pr-labeler.svg?sanitize=true" width="456px" alt="pr-labeler">
+</p>
+
 # pr-labeler
 
 > A GitHub App built with [Probot](https://github.com/probot/probot) that A GitHub bot to label PRs automatically based on title and body against list of defined labels.
