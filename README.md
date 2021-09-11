@@ -30,4 +30,4 @@ For more, check out the [Contributing Guide](CONTRIBUTING.md).
 
 ## License
 
-[ISC](LICENSE) © 2021 João Carmo <kingjoao@gmail.com>
+[MIT](LICENSE) © 2021 João Carmo
