@@ -1,5 +1,6 @@
 import type { Context } from 'probot'
 import type { OctokitResponse } from '@octokit/types'
+import { parseBodyForTags } from './utils'
 
 type Label = {
   id: number
@@ -13,13 +14,16 @@ type Label = {
 
 type LabelResponse = OctokitResponse<Label, 201>
 
+/**
+ * @async
+ * @param {import('probot').Context} context
+ */
 const prLabeler = async (
   context: Context<'pull_request.opened'> | Context<'pull_request.edited'>,
 ) => {
-  const prBody = context.payload.pull_request.body
-  console.log(prBody)
+  const prBody = context.payload.pull_request.body ?? ''
 
-  const labelsOnBody: string[] = []
+  const labelsOnBody = parseBodyForTags(prBody)
 
   // Check if we need to create new labels
   const existingsLabels = await context.octokit.issues.listLabelsForRepo()
@@ -34,23 +38,21 @@ const prLabeler = async (
 
   for (const name of newLabels) {
     requestsToCreateLabel.push(
-      context.octokit.issues.createLabel({
-        owner: context.payload.repository.owner.login,
-        repo: context.payload.repository.name,
-        name,
-      }),
+      context.octokit.issues.createLabel(context.repo({ name })),
     )
   }
 
-  await Promise.all(requestsToCreateLabel)
+  try {
+    await Promise.all(requestsToCreateLabel)
+  } catch (error) {
+    // Something went wrong, but it's not blocking
+    context.log.error(`${error}`)
+  }
 
   // Add the labels to the PR
-  await context.octokit.issues.addLabels({
-    owner: context.payload.repository.owner.login,
-    repo: context.payload.repository.name,
-    issue_number: context.payload.pull_request.number,
-    labels: labelsOnBody,
-  })
+  await context.octokit.issues.addLabels(
+    context.issue({ labels: labelsOnBody }),
+  )
 }
 
 export default prLabeler

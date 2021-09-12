@@ -37,6 +37,7 @@
     "eslint-plugin-jest": "^24.4.0",
     "jest": "^27.1.1",
     "nock": "^13.0.5",
+    "nock-knock": "^2.0.0",
     "prettier": "^2.4.0",
     "smee-client": "^1.2.2",
     "ts-jest": "^27.0.5",

@@ -4,9 +4,10 @@ import * as fs from 'fs'
 import * as path from 'path'
 import prLabeler from '../src'
 import { HOOK_NAME_PR } from '../src/constants'
-import payload from './fixtures/pull_request.opened.json'
+import prOpenedPayload from './fixtures/pull_request.opened.json'
+import repoLabels from './fixtures/repo.labels.json'
 
-// const issueCreatedBody = { body: 'Thanks for opening this issue!' }
+const route = require('nock-knock/lib').default
 
 const privateKey = fs.readFileSync(
   path.join(__dirname, 'fixtures/mock-cert.pem'),
@@ -18,8 +19,16 @@ describe('PR Labeler', () => {
 
   beforeEach(() => {
     nock.disableNetConnect()
+
+    nock('https://api.github.com')
+      // Test that we correctly return a test token
+      .post('/app/installations/1/access_tokens')
+      .reply(200, {
+        token: 'test-token',
+      })
+
     probot = new Probot({
-      appId: 123,
+      appId: 42,
       privateKey,
       // Disable request throttling and retries for testing
       Octokit: ProbotOctokit.defaults({
@@ -27,36 +36,33 @@ describe('PR Labeler', () => {
         throttle: { enabled: false },
       }),
     })
+
     // Load our app into probot
     probot.load(prLabeler)
   })
 
-  test('adds labels when a pr is opened/edited', async () => {
-    const mock = nock('https://api.github.com')
-      // Test that we correctly return a test token
-      .post('/app/installations/2/access_tokens')
-      .reply(200, {
-        token: 'test',
-        permissions: {
-          [HOOK_NAME_PR]: 'write',
-        },
-      })
-
-      // Test that a PR is created
-      .post('/repos/joaocarmo/pr-labeler-test/pulls', (body: any) => {
-        expect(body.action).toBe('opened')
-        return true
-      })
-      .reply(200)
-
-    // Receive a webhook event
-    await probot.receive({ name: HOOK_NAME_PR, payload })
-
-    expect(mock.pendingMocks()).toStrictEqual([])
-  })
+  afterAll(nock.restore)
 
   afterEach(() => {
     nock.cleanAll()
     nock.enableNetConnect()
+  })
+
+  test('adds labels when a pr is opened', async () => {
+    const mock = nock('https://api.github.com')
+      // Test that we return the correct repo labels
+      .get(route('/repos/:owner/:repo/labels'))
+      .reply(200, repoLabels)
+      .post(route('/repos/:owner/:repo/issues/1/labels'), (body: any) => {
+        expect(Array.isArray(body.labels)).toBe(true)
+        expect(body.labels.length).toBe(0)
+        return true
+      })
+      .reply(200, repoLabels)
+
+    // Receive a webhook event
+    await probot.receive({ name: HOOK_NAME_PR, payload: prOpenedPayload })
+
+    expect(mock.pendingMocks()).toStrictEqual([])
   })
 })

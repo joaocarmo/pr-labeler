@@ -70,7 +70,7 @@ default_permissions:
 
   # Issues and related comments, assignees, labels, and milestones.
   # https://developer.github.com/v3/apps/permissions/#permission-on-issues
-  # issues: read
+  issues: write
 
   # Search repositories, list collaborators, and access repository metadata.
   # https://developer.github.com/v3/apps/permissions/#metadata-permissions
@@ -123,6 +123,14 @@ default_permissions:
   # Get notified of, and update, content references.
   # https://developer.github.com/v3/apps/permissions/
   # organization_administration: read
+
+  # We're using the `.github/pr-labeler.yml` file for configuration
+  # https://developer.github.com/v3/apps/permissions/#permission-on-single-file
+  single_file: read
+
+# We're using the `.github/pr-labeler.yml` file for configuration
+# https://developer.github.com/v3/apps/permissions/#permission-on-single-file
+single_file_name: .github/pr-labeler.yml
 
 # The name of the GitHub App. Defaults to the name specified in package.json
 name: PR Labeler

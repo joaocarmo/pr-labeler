@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     camelcase: 'off',
     'import/extensions': ['error', 'never'],
+    'import/prefer-default-export': 'off',
     'no-restricted-syntax': 'off',
   },
   settings: {
