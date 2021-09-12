@@ -6,9 +6,9 @@
 
 ![tests](https://github.com/joaocarmo/pr-labeler/workflows/Tests/badge.svg)
 
-A GitHub App built with [Probot](https://github.com/probot/probot) that A GitHub
-bot to label PRs automatically based on title and body against list of defined
-labels.
+A GitHub App built with [Probot](https://github.com/probot/probot) that enables
+a GitHub bot to label PRs automatically based on title and body against a list
+of defined labels.
 
 ## Config
 
