@@ -14,6 +14,11 @@ const privateKey = fs.readFileSync(
   'utf-8',
 )
 
+const configFile = fs.readFileSync(
+  path.join(__dirname, 'fixtures/mock-config.yml'),
+  'utf-8',
+)
+
 describe('PR Labeler', () => {
   let probot: any
 
@@ -48,17 +53,58 @@ describe('PR Labeler', () => {
     nock.enableNetConnect()
   })
 
-  test('adds labels when a pr is opened', async () => {
+  test('adds labels when a pr is opened (no config)', async () => {
     const mock = nock('https://api.github.com')
+      // Test with no config
+      .get(route(`/repos/:owner/:repo/contents/:path`))
+      .reply(404)
+      .get(route(`/repos/:owner/.github/contents/:path`))
+      .reply(404)
       // Test that we return the correct repo labels
       .get(route('/repos/:owner/:repo/labels'))
       .reply(200, repoLabels)
-      .post(route('/repos/:owner/:repo/issues/1/labels'), (body: any) => {
-        expect(Array.isArray(body.labels)).toBe(true)
-        expect(body.labels.length).toBe(0)
+      // Test that we correctly update the correct labels
+      .post(
+        route('/repos/:owner/:repo/issues/:issue_number/labels'),
+        (body: any) => {
+          expect(Array.isArray(body.labels)).toBe(true)
+          expect(body.labels.length).toBe(0)
+          return true
+        },
+      )
+      .reply(200, {})
+
+    // Receive a webhook event
+    await probot.receive({ name: HOOK_NAME_PR, payload: prOpenedPayload })
+
+    expect(mock.pendingMocks()).toStrictEqual([])
+  })
+
+  test('adds labels when a pr is opened (with config)', async () => {
+    const mock = nock('https://api.github.com')
+      // Test with no config
+      .get(route(`/repos/:owner/:repo/contents/:path`))
+      .reply(200, configFile)
+      // Test that we return the correct repo labels
+      .get(route('/repos/:owner/:repo/labels'))
+      .reply(200, repoLabels)
+      // Test that we correctly create the correct labels
+      .post(route('/repos/:owner/:repo/labels'), (body: any) => {
+        expect(body.name).toBe('feature')
         return true
       })
-      .reply(200, repoLabels)
+      .reply(200, {})
+      // Test that we correctly update the correct labels
+      .post(
+        route('/repos/:owner/:repo/issues/:issue_number/labels'),
+        (body: any) => {
+          expect(Array.isArray(body.labels)).toBe(true)
+          expect(body.labels.length).toBe(1)
+          expect(body.labels).toStrictEqual(['feature'])
+          return true
+        },
+      )
+      .reply(200, {})
 
     // Receive a webhook event
     await probot.receive({ name: HOOK_NAME_PR, payload: prOpenedPayload })

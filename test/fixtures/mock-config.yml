@@ -1,0 +1,8 @@
+caseSensitive: true
+customLabels:
+  - text: 'custom-text-1'
+    label: 'custom-label-1'
+  - text: 'custom-text-2'
+    label: 'custom-label-2'
+  - text: '#feature'
+    label: 'feature'

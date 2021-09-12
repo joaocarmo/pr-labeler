@@ -1,10 +1,30 @@
 <p align="center">
-	<img src="https://raw.githubusercontent.com/joaocarmo/pr-labeler/master/assets/pr-labeler.svg?sanitize=true" width="456px" alt="pr-labeler">
+	<img src="https://raw.githubusercontent.com/joaocarmo/pr-labeler/master/assets/pr-labeler.svg?sanitize=true" width="256px" alt="pr-labeler">
 </p>
 
 # pr-labeler
 
 > A GitHub App built with [Probot](https://github.com/probot/probot) that A GitHub bot to label PRs automatically based on title and body against list of defined labels.
+
+## Config
+
+Add a `pr-labeler.yml` configuration file to your repository's `.github`
+directory with the following content:
+
+```yaml
+# .github/pr-labeler.yml
+# Treats the text and labels as case sensitive [default: true]
+caseSensitive: true
+# Array of labels to be applied to the PR [default: []]
+# Finds the `text` within the PR title and body and applies the `label`
+customLabels:
+  - text: '#bug'
+    label: 'bug'
+  - text: '#test'
+    label: 'test'
+  - text: '#feature'
+    label: 'feature'
+```
 
 ## Setup
 

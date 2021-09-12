@@ -1,6 +1,6 @@
 import type { Context } from 'probot'
 import type { OctokitResponse } from '@octokit/types'
-import { parseBodyForTags } from './utils'
+import { getConfig, parseBodyForTags } from './utils'
 
 type Label = {
   id: number
@@ -21,9 +21,11 @@ type LabelResponse = OctokitResponse<Label, 201>
 const prLabeler = async (
   context: Context<'pull_request.opened'> | Context<'pull_request.edited'>,
 ) => {
+  const config = await getConfig(context)
+
   const prBody = context.payload.pull_request.body ?? ''
 
-  const labelsOnBody = parseBodyForTags(prBody)
+  const labelsOnBody = parseBodyForTags(prBody, config)
 
   /*
   if (!labelsOnBody.length) {
@@ -33,7 +35,9 @@ const prLabeler = async (
   */
 
   // Check if we need to create new labels
-  const existingsLabels = await context.octokit.issues.listLabelsForRepo()
+  const existingsLabels = await context.octokit.issues.listLabelsForRepo(
+    context.repo(),
+  )
   const existingsLabelsMap = existingsLabels.data.map(({ name }: Label) => name)
 
   const newLabels = labelsOnBody.filter(
