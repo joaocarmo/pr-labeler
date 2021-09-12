@@ -2,7 +2,7 @@
 	<img src="https://raw.githubusercontent.com/joaocarmo/pr-labeler/master/assets/pr-labeler.svg?sanitize=true" width="256px" alt="pr-labeler">
 </p>
 
-# pr-labeler
+# PR Labeler
 
 ![tests](https://github.com/joaocarmo/pr-labeler/workflows/Tests/badge.svg)
 
