@@ -7,9 +7,13 @@
   "license": "MIT",
   "homepage": "https://github.com/joaocarmo/pr-labeler",
   "keywords": [
-    "probot",
+    "bot",
     "github",
-    "probot-app"
+    "labeler",
+    "pr",
+    "probot-app",
+    "probot",
+    "tags"
   ],
   "scripts": {
     "build": "tsc",

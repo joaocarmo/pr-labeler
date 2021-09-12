@@ -27,7 +27,7 @@ describe('PR Labeler', () => {
 
     nock('https://api.github.com')
       // Test that we correctly return a test token
-      .post('/app/installations/1/access_tokens')
+      .post(route('/app/installations/:installation_id/access_tokens'))
       .reply(200, {
         token: 'test-token',
       })
