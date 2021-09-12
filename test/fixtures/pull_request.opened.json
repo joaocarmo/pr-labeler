@@ -2,7 +2,7 @@
   "action": "opened",
   "pull_request": {
     "title": "Test",
-    "body": "This includes a feature tag",
+    "body": "This includes a #feature tag",
     "number": 1,
     "head": {
       "sha": "sha123"

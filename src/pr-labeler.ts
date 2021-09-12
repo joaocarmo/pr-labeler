@@ -25,6 +25,13 @@ const prLabeler = async (
 
   const labelsOnBody = parseBodyForTags(prBody)
 
+  /*
+  if (!labelsOnBody.length) {
+    // No labels on the body, so we don't need to do anything
+    return
+  }
+  */
+
   // Check if we need to create new labels
   const existingsLabels = await context.octokit.issues.listLabelsForRepo()
   const existingsLabelsMap = existingsLabels.data.map(({ name }: Label) => name)

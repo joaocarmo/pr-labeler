@@ -1,7 +1,14 @@
-export type Config = {
-  caseSensitive: boolean
+export type CustomLabel = {
+  text: string
+  label: string
 }
 
-export const defaultConfig = {
+export type Config = {
+  caseSensitive: boolean
+  customLabels: CustomLabel[]
+}
+
+export const defaultConfig: Config = {
   caseSensitive: true,
+  customLabels: [],
 }

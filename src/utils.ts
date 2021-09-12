@@ -3,11 +3,14 @@ import type { Config } from './config'
 
 const parseBodyForTags = (
   body: string,
-  config: Config = defaultConfig,
-): string[] => {
-  console.log(body, config)
-
-  return []
-}
+  { caseSensitive, customLabels }: Config = defaultConfig,
+): string[] =>
+  customLabels
+    .filter(({ text }) =>
+      caseSensitive
+        ? body.includes(text)
+        : body.toLowerCase().includes(text.toLowerCase()),
+    )
+    .map(({ label }) => label)
 
 export { parseBodyForTags }
