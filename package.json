@@ -17,7 +17,7 @@
     "pretty": "prettier --write .",
     "start": "probot run ./lib/index.js",
     "test": "jest",
-    "typings": "tsc --noEmit"
+    "type-check": "tsc --noEmit"
   },
   "engines": {
     "node": ">= 10.13.0"

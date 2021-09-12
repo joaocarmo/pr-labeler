@@ -4,7 +4,11 @@
 
 # pr-labeler
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) that A GitHub bot to label PRs automatically based on title and body against list of defined labels.
+![tests](https://github.com/joaocarmo/pr-labeler/workflows/Tests/badge.svg)
+
+A GitHub App built with [Probot](https://github.com/probot/probot) that A GitHub
+bot to label PRs automatically based on title and body against list of defined
+labels.
 
 ## Config
 
@@ -26,7 +30,9 @@ customLabels:
     label: 'feature'
 ```
 
-## Setup
+## Development
+
+### Setup
 
 ```sh
 # Install dependencies
@@ -36,7 +42,7 @@ npm install
 npm start
 ```
 
-## Docker
+### Docker
 
 ```sh
 # 1. Build container
@@ -46,7 +52,7 @@ docker build -t pr-labeler .
 docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> pr-labeler
 ```
 
-## Contributing
+### Contributing
 
 If you have suggestions for how pr-labeler could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
 

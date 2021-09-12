@@ -60,19 +60,6 @@ describe('PR Labeler', () => {
       .reply(404)
       .get(route(`/repos/:owner/.github/contents/:path`))
       .reply(404)
-      // Test that we return the correct repo labels
-      .get(route('/repos/:owner/:repo/labels'))
-      .reply(200, repoLabels)
-      // Test that we correctly update the correct labels
-      .post(
-        route('/repos/:owner/:repo/issues/:issue_number/labels'),
-        (body: any) => {
-          expect(Array.isArray(body.labels)).toBe(true)
-          expect(body.labels.length).toBe(0)
-          return true
-        },
-      )
-      .reply(200, {})
 
     // Receive a webhook event
     await probot.receive({ name: HOOK_NAME_PR, payload: prOpenedPayload })
