@@ -1,3 +1,4 @@
+alwaysReplace: false
 caseSensitive: true
 customLabels:
   - text: 'custom-text-1'
@@ -6,3 +7,5 @@ customLabels:
     label: 'custom-label-2'
   - text: '#feature'
     label: 'feature'
+searchBody: true
+searchTitle: true

@@ -23,11 +23,18 @@ const prLabeler = async (
 ) => {
   const config = await getConfig(context)
 
+  const prTitle = context.payload.pull_request.title
   const prBody = context.payload.pull_request.body ?? ''
 
-  const labelsOnBody = parseBodyForTags(prBody, config)
+  const labelsOnTitle = config.searchTitle
+    ? parseBodyForTags(prTitle, config)
+    : []
+  const labelsOnBody = config.searchBody ? parseBodyForTags(prBody, config) : []
 
-  if (!labelsOnBody.length) {
+  // Aggregates all labels to be added to the PR and removes duplicates
+  const labelsOnPR = Array.from(new Set([...labelsOnTitle, ...labelsOnBody]))
+
+  if (!labelsOnPR.length) {
     // No labels on the body, so we don't need to do anything
     return
   }
@@ -38,7 +45,7 @@ const prLabeler = async (
   )
   const existingsLabelsMap = existingsLabels.data.map(({ name }: Label) => name)
 
-  const newLabels = labelsOnBody.filter(
+  const newLabels = labelsOnPR.filter(
     (label) => !existingsLabelsMap.includes(label),
   )
 
@@ -58,10 +65,16 @@ const prLabeler = async (
     context.log.error(`${error}`)
   }
 
-  // Add the labels to the PR
-  await context.octokit.issues.addLabels(
-    context.issue({ labels: labelsOnBody }),
-  )
+  // Add/replace the labels to the PR
+  if (config.alwaysReplace) {
+    await context.octokit.issues.setLabels(
+      context.issue({ labels: labelsOnPR }),
+    )
+  } else {
+    await context.octokit.issues.addLabels(
+      context.issue({ labels: labelsOnPR }),
+    )
+  }
 }
 
 export default prLabeler

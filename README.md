@@ -17,17 +17,23 @@ directory with the following content:
 
 ```yaml
 # .github/pr-labeler.yml
+# The bot always updates the labels, add/remove as necessary [default: false]
+alwaysReplace: false
 # Treats the text and labels as case sensitive [default: true]
 caseSensitive: true
 # Array of labels to be applied to the PR [default: []]
-# Finds the `text` within the PR title and body and applies the `label`
 customLabels:
+  # Finds the `text` within the PR title and body and applies the `label`
   - text: '#bug'
     label: 'bug'
   - text: '#test'
     label: 'test'
   - text: '#feature'
     label: 'feature'
+# Search the body of the PR for the `text` [default: true]
+searchBody: true
+# Search the title of the PR for the `text` [default: true]
+searchTitle: true
 ```
 
 ## Development
