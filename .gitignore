@@ -2,7 +2,7 @@
 .DS_Store
 
 # Certificates
-\*.pem
+*.pem
 !mock-cert.pem
 
 # Logs
