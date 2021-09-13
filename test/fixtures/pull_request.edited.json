@@ -1,8 +1,8 @@
 {
-  "action": "opened",
+  "action": "edited",
   "pull_request": {
-    "title": "Test title without tag",
-    "body": "This includes a #feature tag",
+    "title": "WIP: Test title with tag",
+    "body": "This does not include a tag",
     "number": 1,
     "head": {
       "sha": "sha123"
