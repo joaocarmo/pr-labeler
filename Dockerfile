@@ -1,6 +1,6 @@
-FROM node:12-slim
+FROM node:14-slim
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package.json yarn.lock ./
 

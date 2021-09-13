@@ -5,6 +5,7 @@
 # PR Labeler
 
 ![tests](https://github.com/joaocarmo/pr-labeler/workflows/Tests/badge.svg)
+![ql](https://github.com/joaocarmo/pr-labeler/workflows/CodeQL/badge.svg)
 
 A GitHub App built with [Probot](https://github.com/probot/probot) that enables
 a GitHub bot to label PRs automatically based on title and body against a list
@@ -38,14 +39,19 @@ searchTitle: true
 
 ## Development
 
+If you want to work on the bot, you can follow the instructions below.
+
 ### Setup
 
 ```sh
 # Install dependencies
-npm install
+yarn install
+
+# Build the bot (we need to transpile TypeScript into JavaScript)
+yarn build
 
 # Run the bot
-npm start
+yarn start
 ```
 
 ### Docker
