@@ -1,6 +1,6 @@
 {
   "name": "pr-labeler",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "description": "A GitHub bot to label PRs automatically based on title and body against list of defined labels.",
   "author": "Joao Carmo",
