@@ -1,0 +1,51 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: https://pr-labeler.glitch.me
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Create GitHub deployment
+        uses: chrnorm/deployment-action@releases/v1
+        id: deployment
+        with:
+          token: '${{ secrets.GH_PAT }}'
+
+      - name: Deploy project to Glitch
+        run: |
+          npx glitcheroo deploy
+        env:
+          GLITCHEROO_GIT_URL: ${{ secrets.GLITCHEROO_GIT_URL }}
+
+      - name: Set ENVIRONMENT_URL environment variable
+        run: |
+          echo "::set-env name=ENVIRONMENT_URL::https://glitch.com/~$(basename "${GLITCHEROO_GIT_URL}")"
+        env:
+          GLITCHEROO_GIT_URL: ${{ secrets.GLITCHEROO_GIT_URL }}
+
+      - name: Update deployment status (success)
+        if: success()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          token: '${{ secrets.GH_PAT }}'
+          environment_url: '${{ env.ENVIRONMENT_URL }}'
+          state: 'success'
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          token: '${{ secrets.GH_PAT }}'
+          environment_url: '${{ env.ENVIRONMENT_URL }}'
+          state: 'failure'
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
