@@ -7,7 +7,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: Production
+      name: production
       url: https://pr-labeler.glitch.me
 
     steps:
@@ -26,18 +26,11 @@ jobs:
         env:
           GLITCHEROO_GIT_URL: ${{ secrets.GLITCHEROO_GIT_URL }}
 
-      - name: Set ENVIRONMENT_URL environment variable
-        run: |
-          echo "::set-env name=ENVIRONMENT_URL::https://glitch.com/~$(basename "${GLITCHEROO_GIT_URL}")"
-        env:
-          GLITCHEROO_GIT_URL: ${{ secrets.GLITCHEROO_GIT_URL }}
-
       - name: Update deployment status (success)
         if: success()
         uses: chrnorm/deployment-status@releases/v1
         with:
           token: '${{ secrets.GH_PAT }}'
-          environment_url: '${{ env.ENVIRONMENT_URL }}'
           state: 'success'
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
 
@@ -46,6 +39,5 @@ jobs:
         uses: chrnorm/deployment-status@releases/v1
         with:
           token: '${{ secrets.GH_PAT }}'
-          environment_url: '${{ env.ENVIRONMENT_URL }}'
           state: 'failure'
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
