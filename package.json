@@ -18,8 +18,8 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
-    "clean": "",
-    "install": "build",
+    "clean": "rm -rf coverage/ lib/",
+    "install": "tsc",
     "lint": "eslint .",
     "pretty": "prettier --write .",
     "start": "probot run ./lib/index.js",
@@ -30,6 +30,7 @@
     "node": ">= 10.13.0"
   },
   "dependencies": {
+    "escape-string-regexp": "^5.0.0",
     "probot": "^12.1.1",
     "typescript": "^4.4.4"
   },
