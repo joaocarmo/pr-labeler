@@ -1,6 +1,7 @@
 import type { Context } from 'probot'
+import escapeStringRegexp from 'escape-string-regexp'
 import { defaultConfig } from './config'
-import type { Config } from './config'
+import type { Config, CustomLabel } from './config'
 import { CONFIG_FILE_NAME } from './constants'
 
 const getConfig = async (
@@ -28,16 +29,24 @@ const getConfig = async (
   return config
 }
 
+const filterFn =
+  (body: string, { caseSensitive, wholeWords }: Config = defaultConfig) =>
+  ({ text }: CustomLabel) => {
+    const escapedText = escapeStringRegexp(text)
+    const searchString = wholeWords
+      ? `[^0-9A-Za-z_]${escapedText}[^0-9A-Za-z_]`
+      : escapedText
+    const searchOptions = caseSensitive ? 'g' : 'gi'
+
+    return new RegExp(searchString, searchOptions).test(body)
+  }
+
 const parseBodyForTags = (
   body: string,
-  { caseSensitive, customLabels }: Config = defaultConfig,
+  { customLabels, ...config }: Config = defaultConfig,
 ): string[] =>
   customLabels
-    .filter(({ text }) =>
-      caseSensitive
-        ? body.includes(text)
-        : body.toLowerCase().includes(text.toLowerCase()),
-    )
+    .filter(filterFn(body, { customLabels, ...config }))
     .map(({ label }) => label)
 
 export { getConfig, parseBodyForTags }

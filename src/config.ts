@@ -9,6 +9,7 @@ export type Config = {
   customLabels: CustomLabel[]
   searchBody: boolean
   searchTitle: boolean
+  wholeWords: boolean
 }
 
 export const defaultConfig: Config = {
@@ -17,4 +18,5 @@ export const defaultConfig: Config = {
   customLabels: [],
   searchBody: true,
   searchTitle: true,
+  wholeWords: false,
 }

@@ -35,6 +35,8 @@ customLabels:
 searchBody: true
 # Search the title of the PR for the `text` [default: true]
 searchTitle: true
+# Search for whole words only [default: false]
+wholeWords: false
 ```
 
 ## Development
@@ -66,7 +68,8 @@ docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> pr-labeler
 
 ### Contributing
 
-If you have suggestions for how pr-labeler could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
+If you have suggestions for how pr-labeler could be improved, or want to report
+a bug, open an issue! We'd love all and any contributions.
 
 For more, check out the [Contributing Guide](CONTRIBUTING.md).
 

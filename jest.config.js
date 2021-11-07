@@ -1,9 +1,21 @@
+const esModules = ['escape-string-regexp'].join('|');
+
 module.exports = {
+  globals: {
+    'ts-jest': {
+      diagnostics: {
+        ignoreCodes: [
+          'TS7006', /* Parameter 'string' implicitly has an 'any' type. */
+        ],
+      },
+    },
+  },
   roots: ['<rootDir>/src/', '<rootDir>/test/'],
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.[tj]sx?$': 'ts-jest',
   },
-  testRegex: '(/__tests__/.*|\\.(test|spec))\\.[tj]sx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testEnvironment: 'node',
+  testRegex: '(/__tests__/.*|\\.(test|spec))\\.[tj]sx?$',
+  transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
 }

@@ -29,6 +29,24 @@ describe('parseBodyForTags', () => {
     expect(tags).toEqual(['tag1', 'tag2', 'differentName'])
   })
 
+  it('should return an array of tags if tags are found in simple text (whole words)', () => {
+    const body =
+      'This is a test with several tags: verybigtag1, verybigtag2, and simple tag3'
+    const customLabels = [
+      {
+        text: 'verybigtag1',
+        label: 'veryBigTag',
+      },
+      {
+        text: 'tag',
+        label: 'singleWordTag',
+      },
+    ]
+    const config = { ...defaultConfig, wholeWords: true, customLabels }
+    const tags = parseBodyForTags(body, config)
+    expect(tags).toEqual(['veryBigTag'])
+  })
+
   it('should return an array of tags if tags are found in simple text (case insensitive)', () => {
     const body = 'This is a test with TAG1, TAG2, and TAG3'
     const customLabels = [
