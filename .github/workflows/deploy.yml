@@ -12,13 +12,13 @@ jobs:
 
     steps:
       - name: Checkout project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           token: '${{ secrets.GH_PAT }}'
           ref: 'main'
 
       - name: Create GitHub deployment
-        uses: chrnorm/deployment-action@releases/v1
+        uses: chrnorm/deployment-action@releases/v2
         id: deployment
         with:
           token: '${{ secrets.GH_PAT }}'
