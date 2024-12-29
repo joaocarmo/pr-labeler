@@ -1,4 +1,4 @@
-const esModules = ['escape-string-regexp'].join('|');
+const esmModules = ['escape-string-regexp'].join('|')
 
 module.exports = {
   roots: ['<rootDir>/src/', '<rootDir>/test/'],
@@ -8,5 +8,7 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testEnvironment: 'node',
   testRegex: '(/__tests__/.*|\\.(test|spec))\\.[tj]sx?$',
-  transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
+  transformIgnorePatterns: [
+    `<rootDir>/node_modules/(?!(?:.pnpm/)?(${esmModules}))`,
+  ],
 }
