@@ -23,7 +23,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
- 
+
       - name: Get release
         id: get_release
         uses: bruceadams/get-release@v1.3.2
