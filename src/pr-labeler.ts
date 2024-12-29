@@ -41,6 +41,7 @@ const prLabeler = async (
 
   // Check if we need to create new labels
   const existingsLabels = await context.octokit.issues.listLabelsForRepo(
+    // @ts-expect-error
     context.repo(),
   )
   const existingsLabelsMap = existingsLabels.data.map(({ name }: Label) => name)
