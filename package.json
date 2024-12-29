@@ -27,7 +27,7 @@
     "type-check": "tsc --noEmit"
   },
   "engines": {
-    "node": ">= 10.13.0"
+    "node": ">= 22"
   },
   "dependencies": {
     "escape-string-regexp": "^5.0.0",
