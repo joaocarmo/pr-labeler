@@ -47,13 +47,13 @@ If you want to work on the bot, you can follow the instructions below.
 
 ```sh
 # Install dependencies
-yarn install
+pnpm install
 
 # Build the bot (we need to transpile TypeScript into JavaScript)
-yarn build
+pnpm build
 
 # Run the bot
-yarn start
+pnpm start
 ```
 
 ### Docker
