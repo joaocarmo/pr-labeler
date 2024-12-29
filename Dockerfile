@@ -2,16 +2,19 @@ FROM node:22-slim
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+RUN corepack enable \
+    && corepack prepare pnpm@latest --activate
 
-RUN yarn install --immutable --production
+COPY package.json pnpm-lock.yaml tsconfig.json ./
 
-RUN yarn cache clean --all
+RUN pnpm install --frozen-lockfile
 
 ENV NODE_ENV="production"
 
 COPY . .
 
-RUN yarn build
+RUN pnpm build
 
-CMD [ "yarn", "start" ]
+RUN pnpm store prune
+
+CMD [ "pnpm", "start" ]
