@@ -12,18 +12,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Enable corepack
+        run: |
+          corepack enable pnpm
+          corepack use pnpm
+
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
+          cache: 'pnpm'
+
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install --frozen-lockfile
+
       - name: Lint the source files
-        run: yarn lint
+        run: pnpm lint
+
       - name: Type check
-        run: yarn type-check
+        run: pnpm type-check
+
       - name: Execute the tests
-        run: yarn test
+        run: pnpm test
+
       - name: Build the library
-        run: yarn build
+        run: pnpm build
