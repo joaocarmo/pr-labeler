@@ -9,4 +9,9 @@ export default tseslint.config(
   {
     ignores: ['node_modules', 'lib', '.prettierrc.js', 'jest.config.js'],
   },
+  {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
 )
