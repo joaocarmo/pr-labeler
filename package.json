@@ -31,28 +31,24 @@
   },
   "dependencies": {
     "escape-string-regexp": "4.0.0",
-    "probot": "^13.4.1",
-    "typescript": "^5.7.2"
+    "probot": "^13.4.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.17.0",
     "@octokit/types": "^13.6.2",
     "@tsconfig/node22": "^22.0.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.3",
-    "@typescript-eslint/eslint-plugin": "^8.19.0",
-    "@typescript-eslint/parser": "^8.19.0",
-    "eslint": "^8.57.1",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-jest": "^28.10.0",
+    "eslint": "^9.17.0",
     "express": "^4.21.2",
     "jest": "^29.7.0",
     "nock": "14.0.0-beta.19",
     "nock-knock": "^2.0.0",
     "prettier": "^3.4.2",
     "smee-client": "^2.0.4",
-    "ts-jest": "^29.2.5"
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.19.0"
   },
   "packageManager": "pnpm@10.0.0-rc.2+sha512.b6e59b96f90ca92449ac2f6dca9b430880448fc97d21f0fa9200e3d5ddb5289ad535255400554f7f3486e2d60058492161aaa9b58828e81f50c096718be9d156"
 }
