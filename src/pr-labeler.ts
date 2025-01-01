@@ -40,7 +40,7 @@ const prLabeler = async (
   }
 
   // Check if we need to create new labels
-  // @ts-expect-error
+  // @ts-expect-error - Seems to be a recurring issue with Probot https://github.com/probot/probot/issues?q=Expression+produces+a+union+type+that+is+too+complex+to+represent.
   const repo = context.repo()
   const existingsLabels = await context.octokit.issues.listLabelsForRepo(repo)
   const existingsLabelsMap = existingsLabels.data.map(({ name }: Label) => name)

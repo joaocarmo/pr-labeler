@@ -1,14 +1,13 @@
-import nock from 'nock'
-import { readFileSync } from 'fs'
 import { join } from 'path'
+import { readFileSync } from 'fs'
+import nock from 'nock'
+import route from 'nock-knock/lib'
 import { Probot, ProbotOctokit } from 'probot'
 import prLabeler from '../src'
 import { HOOK_NAME_PR } from '../src/constants'
 import prEditedPayload from './fixtures/pull_request.edited.json'
 import prOpenedPayload from './fixtures/pull_request.opened.json'
 import repoLabels from './fixtures/repo.labels.json'
-
-const route = require('nock-knock/lib').default
 
 // Get config files
 const privateKey = readFileSync(
