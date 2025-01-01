@@ -2,7 +2,7 @@ import type { Context } from 'probot'
 import type { OctokitResponse } from '@octokit/types'
 import { getConfig, parseBodyForTags } from './utils'
 
-type Label = {
+interface Label {
   id: number
   node_id: string
   url: string
