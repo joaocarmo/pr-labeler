@@ -40,10 +40,9 @@ const prLabeler = async (
   }
 
   // Check if we need to create new labels
-  const existingsLabels = await context.octokit.issues.listLabelsForRepo(
-    // @ts-expect-error
-    context.repo(),
-  )
+  // @ts-expect-error
+  const repo = context.repo()
+  const existingsLabels = await context.octokit.issues.listLabelsForRepo(repo)
   const existingsLabelsMap = existingsLabels.data.map(({ name }: Label) => name)
 
   const newLabels = labelsOnPR.filter(
