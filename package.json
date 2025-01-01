@@ -30,7 +30,7 @@
     "node": ">= 22"
   },
   "dependencies": {
-    "escape-string-regexp": "^5.0.0",
+    "escape-string-regexp": "4.0.0",
     "probot": "^13.4.1",
     "typescript": "^5.7.2"
   },
