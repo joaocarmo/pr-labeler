@@ -1,9 +1,9 @@
-export type CustomLabel = {
+export interface CustomLabel {
   text: string
   label: string
 }
 
-export type Config = {
+export interface Config {
   alwaysReplace: boolean
   caseSensitive: boolean
   customLabels: CustomLabel[]
