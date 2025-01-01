@@ -15,14 +15,14 @@
     "probot",
     "tags"
   ],
-  "main": "lib/index.js",
+  "main": "lib/src/index.js",
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf coverage/ lib/",
     "install": "tsc",
     "lint": "eslint .",
     "pretty": "prettier --write .",
-    "start": "probot run ./lib/index.js",
+    "start": "probot run ./lib/src/index.js",
     "test": "jest",
     "type-check": "tsc --noEmit"
   },
