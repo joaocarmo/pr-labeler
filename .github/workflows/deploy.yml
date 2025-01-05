@@ -6,9 +6,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: production
-      url: https://pr-labeler.glitch.me
+    permissions:
+      deployments: write
 
     steps:
       - name: Checkout project
@@ -22,9 +21,5 @@ jobs:
         id: deployment
         with:
           token: '${{ secrets.GH_PAT }}'
-
-      - name: Deploy project to Glitch
-        run: |
-          npx glitcheroo deploy
-        env:
-          GLITCHEROO_GIT_URL: ${{ secrets.GLITCHEROO_GIT_URL }}
+          environment-url: https://pr-labeler.onrender.com
+          environment: production
