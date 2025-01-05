@@ -66,6 +66,21 @@ docker build -t pr-labeler .
 docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> pr-labeler
 ```
 
+### Deployment
+
+A few environment variables need to be set in order to deploy the bot:
+
+```sh
+# The APP_ID and PRIVATE_KEY are required to authenticate the GitHub App
+export APP_ID=<app-id>
+export PRIVATE_KEY=<pem-value>
+# Alternatively, you can set the PRIVATE_KEY_PATH to the path of the private key
+# export PRIVATE_KEY_PATH=<path-to-pem-file>
+
+# The WEBHOOK_SECRET is used to verify incoming webhooks from GitHub
+export WEBHOOK_SECRET=<webhook-secret>
+```
+
 ### Contributing
 
 If you have suggestions for how pr-labeler could be improved, or want to report
